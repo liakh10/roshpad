@@ -1,0 +1,230 @@
+[
+ {
+  "symbol": "AMZN",
+  "name": "Amazon",
+  "stock": "0x12f190a9F9d7D37a250758b26824B97CE941bF54",
+  "feed": "0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C",
+  "heartbeat": 86400,
+  "usd": 255.025,
+  "eth": null
+ },
+ {
+  "symbol": "AAPL",
+  "name": "Apple",
+  "stock": "0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9",
+  "feed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0",
+  "heartbeat": 86400,
+  "usd": 335.49781117,
+  "eth": null
+ },
+ {
+  "symbol": "AMD",
+  "name": "AMD",
+  "stock": "0x86923f96303D656E4aa86D9d42D1e57ad2023fdC",
+  "feed": "0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72",
+  "heartbeat": 86400,
+  "usd": 497.5089,
+  "eth": null
+ },
+ {
+  "symbol": "CRCL",
+  "name": "Circle",
+  "stock": "0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5",
+  "feed": "0x6652eDf64bA3731C4F2D3ce821A0Fb1f1f6b482a",
+  "heartbeat": 86400,
+  "usd": 95.61,
+  "eth": {
+   "fee": 100,
+   "tickSpacing": 1,
+   "poolUsd": 96.89,
+   "dev": 0.0134,
+   "depthEth": 0
+  }
+ },
+ {
+  "symbol": "GME",
+  "name": "GameStop",
+  "stock": "0x1b0E319c6A659F002271B69dB8A7df2F911c153E",
+  "feed": "0x27C71df6A64fB476468EdF256CF72c038baB5B67",
+  "heartbeat": 21600,
+  "usd": 21.825,
+  "eth": {
+   "fee": 3000,
+   "tickSpacing": 60,
+   "poolUsd": 21.77,
+   "dev": 0.0023,
+   "depthEth": 0.78
+  }
+ },
+ {
+  "symbol": "GOOGL",
+  "name": "Alphabet",
+  "stock": "0x2e0847E8910a9732eB3fb1bb4b70a580ADAD4FE3",
+  "feed": "0xF6f373a037c30F0e5010d854385cA89185AE638b",
+  "heartbeat": 86400,
+  "usd": 346.778,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 350.7,
+   "dev": 0.0113,
+   "depthEth": 1326.399
+  }
+ },
+ {
+  "symbol": "INTC",
+  "name": "Intel",
+  "stock": "0xc72b96e0E48ecd4DC75E1e45396e26300BC39681",
+  "feed": "0x3f390C5C24628Ac7C489515402235FeAD71D1913",
+  "heartbeat": 86400,
+  "usd": 98.535,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 97.22,
+   "dev": 0.0134,
+   "depthEth": 0
+  }
+ },
+ {
+  "symbol": "META",
+  "name": "Meta",
+  "stock": "0xc0D6457C16Cc70d6790Dd43521C899C87ce02f35",
+  "feed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1",
+  "heartbeat": 86400,
+  "usd": 667.6834,
+  "eth": null
+ },
+ {
+  "symbol": "MSFT",
+  "name": "Microsoft",
+  "stock": "0xe93237C50D904957Cf27E7B1133b510C669c2e74",
+  "feed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E",
+  "heartbeat": 86400,
+  "usd": 508.49989965,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 510.71,
+   "dev": 0.0044,
+   "depthEth": 1573.006
+  }
+ },
+ {
+  "symbol": "MSTR",
+  "name": "MicroStrategy",
+  "stock": "0xec262a75e413fAfD0dF80480274532C79D42da09",
+  "feed": "0x396118bdFB181e6240E74D243F266B061c0edc3D",
+  "heartbeat": 86400,
+  "usd": 136.3813,
+  "eth": null
+ },
+ {
+  "symbol": "MU",
+  "name": "Micron",
+  "stock": "0xfF080c8ce2E5feadaCa0Da81314Ae59D232d4afD",
+  "feed": "0x425EEFdCf05ed6526C3cE61Af99429A228a6d596",
+  "heartbeat": 86400,
+  "usd": 929.13501567,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 934.17,
+   "dev": 0.0054,
+   "depthEth": 543.39
+  }
+ },
+ {
+  "symbol": "NVDA",
+  "name": "NVIDIA",
+  "stock": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+  "feed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
+  "heartbeat": 86400,
+  "usd": 211.93915933,
+  "eth": {
+   "fee": 500,
+   "tickSpacing": 10,
+   "poolUsd": 212.58,
+   "dev": 0.003,
+   "depthEth": 100.245
+  }
+ },
+ {
+  "symbol": "PLTR",
+  "name": "Palantir",
+  "stock": "0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A",
+  "feed": "0x820ABedFF239034956B7A9d2F0a331f9F075eB4c",
+  "heartbeat": 86400,
+  "usd": 172.5683,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 168.23,
+   "dev": 0.0251,
+   "depthEth": 0
+  }
+ },
+ {
+  "symbol": "QQQ",
+  "name": "Nasdaq 100 ETF",
+  "stock": "0xD5f3879160bc7c32ebb4dC785F8a4F505888de68",
+  "feed": "0x80901d846d5D7B030F26B480776EE3b29374C2ae",
+  "heartbeat": 86400,
+  "usd": 710.245,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 714.72,
+   "dev": 0.0063,
+   "depthEth": 1847.428
+  }
+ },
+ {
+  "symbol": "SNDK",
+  "name": "SanDisk",
+  "stock": "0xB90A19fF0Af67f7779afF50A882A9CfF42446400",
+  "feed": "0xfb133Fa4B7b385802B693a293606682Df47109A3",
+  "heartbeat": 86400,
+  "usd": 1567.3972,
+  "eth": null
+ },
+ {
+  "symbol": "SPCX",
+  "name": "SPCX",
+  "stock": "0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa",
+  "feed": "0xB265810950ba6c5C0Ff821c9963014a56fD8Bffb",
+  "heartbeat": 86400,
+  "usd": 150.87,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 151.74,
+   "dev": 0.0057,
+   "depthEth": 307.689
+  }
+ },
+ {
+  "symbol": "SPY",
+  "name": "S&P 500 ETF",
+  "stock": "0x117cc2133c37B721F49dE2A7a74833232B3B4C0C",
+  "feed": "0x319724394D3A0e3669269846abE664Cd621f9f6A",
+  "heartbeat": 86400,
+  "usd": 760.04,
+  "eth": {
+   "fee": 10000,
+   "tickSpacing": 200,
+   "poolUsd": 770.41,
+   "dev": 0.0136,
+   "depthEth": 44.283
+  }
+ },
+ {
+  "symbol": "TSLA",
+  "name": "Tesla",
+  "stock": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+  "feed": "0x4A1166a659A55625345e9515b32adECea5547C38",
+  "heartbeat": 86400,
+  "usd": 362.30005,
+  "eth": null
+ }
+]

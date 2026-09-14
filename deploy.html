@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="/config.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deploy · Roshpad</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" type="image/png" href="/assets/favicon.png" />
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#0d0b1f;--panel:#161334;--ink:#f4ecff;--dim:#9d93c4;--line:#2c2658;--rose:#ff4fa3;--lilac:#b69cff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Mono",monospace;font-size:13px;line-height:1.7;padding:clamp(16px,4vw,48px)}
+.in{width:min(780px,100%);margin:0 auto}
+h1{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(32px,6vw,54px);line-height:1;letter-spacing:-.02em}
+h1 em{font-style:normal;color:var(--rose)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row + .row{margin-top:12px}
+.btn{height:44px;padding:0 18px;border-radius:12px;border:0;background:var(--rose);color:#1a0716;font:inherit;font-weight:600;cursor:pointer}
+.btn:disabled{opacity:.3;cursor:default}
+.dim{color:var(--dim)} .ok{color:#8ff0c2} .bad{color:#ff8a8a}
+.st{word-break:break-all}
+pre{font-family:inherit;background:#08061a;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;white-space:pre-wrap;word-break:break-all}
+ol{margin:10px 0 0 18px}
+a{color:var(--lilac)}
+</style>
+</head>
+<body><div class="in">
+  <h1>Deploy <em>Roshpad</em></h1>
+  <p class="dim" style="margin-top:10px">Everything below is sent from your own wallet on Robinhood Chain. Your wallet becomes the launchpad owner, treasury and buyback wallet until you change them. Progress is remembered in this browser</p>
+  <div class="card">
+    <div class="row"><button class="btn" id="connect">Connect wallet</button><span id="who" class="dim"></span></div>
+    <ol class="dim">
+      <li>RoshToken implementation, cloned for every launch</li>
+      <li>RoshLaunchpad on the Uniswap v4 PoolManager</li>
+      <li>RoshRouter for ETH, USDG and Stock Token trades</li>
+      <li>Connect the router to the launchpad</li>
+      <li>List the 18 Stock Tokens with their Chainlink feeds and USDG pools</li>
+      <li>Put both addresses into config.js and push</li>
+    </ol>
+  </div>
+  <div class="card">
+    <div class="row"><button class="btn" data-step="token" disabled>1 · Token implementation</button><span class="dim st" id="s-token"></span></div>
+    <div class="row"><button class="btn" data-step="launchpad" disabled>2 · Launchpad</button><span class="dim st" id="s-launchpad"></span></div>
+    <div class="row"><button class="btn" data-step="router" disabled>3 · Router</button><span class="dim st" id="s-router"></span></div>
+    <div class="row"><button class="btn" data-step="connectRouter" disabled>4 · Connect router</button><span class="dim st" id="s-connectRouter"></span></div>
+    <div class="row"><button class="btn" data-step="pairs" disabled>5 · List Stock Tokens</button><span class="dim st" id="s-pairs"></span></div>
+    <pre id="out" hidden></pre>
+  </div>
+</div>
+<script type="module">
+import * as W from '/lib/wallet.js';
+import { encodeDeployData } from 'https://cdn.jsdelivr.net/npm/viem@2.21.55/+esm';
+const $ = id => document.getElementById(id);
+const [TK, LP, RT, PAIRS, C] = await Promise.all(['abi/RoshToken.json', 'abi/RoshLaunchpad.json', 'abi/RoshRouter.json', 'pairs.json', 'chain.json'].map(n => fetch('/lib/' + n + '?v=1').then(r => r.json())));
+const KEY = 'rosh:deploy';
+let S = {}; try { S = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+const link = a => '<span class="ok">' + a + '</span>';
+const btn = k => document.querySelector('[data-step=' + k + ']');
+
+function paint(w = W.state()) {
+  $('who').textContent = w.address ? W.short(w.address) + (w.onChain ? ' · Robinhood Chain' : ' · wrong network') : '';
+  const on = !!w.address;
+  btn('token').disabled = !on;
+  btn('launchpad').disabled = !on || !S.token;
+  btn('router').disabled = !on || !S.launchpad;
+  btn('connectRouter').disabled = !on || !S.router;
+  btn('pairs').disabled = !on || !S.launchpad;
+  for (const k of ['token', 'launchpad', 'router']) if (S[k]) $('s-' + k).innerHTML = link(S[k]);
+  if (S.routerSet) $('s-connectRouter').innerHTML = link('router connected');
+  if (S.pairs) $('s-pairs').innerHTML = link(S.pairs + ' Stock Tokens listed');
+  if (S.launchpad && S.router) { $('out').hidden = false; $('out').textContent = 'config.js\n\nwindow.ROSH_LAUNCHPAD = "' + S.launchpad + '";\nwindow.ROSH_ROUTER = "' + S.router + '";'; }
+}
+W.onChange(paint); W.restore().then(paint);
+$('connect').onclick = () => W.connect().catch(e => alert(e.shortMessage || e.message));
+
+async function create(data, label, el) {
+  el.textContent = 'confirm in wallet…';
+  const tx = await W.sendDeploy(data);
+  el.innerHTML = 'sent · <a href="' + W.explorer('tx', tx.hash) + '" target="_blank" rel="noopener">tx</a> · waiting…';
+  const rc = await tx.wait();
+  if (rc.status !== 'success' || !rc.contractAddress) throw Error(label + ' failed');
+  return rc.contractAddress;
+}
+async function call(el, args) {
+  el.textContent = 'confirm in wallet…';
+  const tx = await W.send(args);
+  el.textContent = 'sent · waiting…';
+  const rc = await tx.wait();
+  if (rc.status !== 'success') throw Error('Transaction failed');
+}
+
+const steps = {
+  token: async el => { S.token = await create(TK.bytecode, 'Token implementation', el); },
+  launchpad: async el => {
+    if (S.launchpad && !confirm('A launchpad is already deployed from this browser. Deploy a new one?')) return;
+    S.launchpad = await create(encodeDeployData({ abi: LP.abi, bytecode: LP.bytecode, args: [C.poolManager, S.token] }), 'Launchpad', el);
+    delete S.router; delete S.routerSet; delete S.pairs;
+  },
+  router: async el => { S.router = await create(encodeDeployData({ abi: RT.abi, bytecode: RT.bytecode, args: [C.poolManager, S.launchpad, C.weth, C.usdg, C.wethUsdgPool] }), 'Router', el); delete S.routerSet; },
+  connectRouter: async el => { await call(el, { address: S.launchpad, abi: LP.abi, functionName: 'setRouter', args: [S.router] }); S.routerSet = true; },
+  pairs: async el => {
+    await call(el, { address: S.launchpad, abi: LP.abi, functionName: 'setPairs', args: [PAIRS.map(p => ({ coin: p.coin, feed: p.feed, stockPool: p.stockPool, enabled: true }))] });
+    S.pairs = (await W.pub.readContract({ address: S.launchpad, abi: LP.abi, functionName: 'pairList' })).length;
+  }
+};
+document.querySelectorAll('[data-step]').forEach(b => b.onclick = async () => {
+  const k = b.dataset.step, el = $('s-' + k);
+  b.disabled = true;
+  try { await steps[k](el); save(); } catch (e) { el.innerHTML = '<span class="bad">' + (e.shortMessage || e.message || e) + '</span>'; }
+  paint();
+});
+</script>
+</body>
+</html>
