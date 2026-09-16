@@ -1,7 +1,7 @@
 /* ================= CONFIG: единственное место, где меняются данные ================= */
 window.SITE = {
   CA:      "0x7A45b8Ecc89866EdD6a0f0C096aFd00284B33BE3",                       /* строго "SOON" до лаунча, потом 0x… (42 символа) */
-  X_URL:   "https://x.com/roshpad_rh",
+  X_URL:   "https://x.com/soon",
   NAME:    "Roshpad",
   TICKER:  "$ROSH",
   TAGLINE: ""
